@@ -1,5 +1,21 @@
-x = input("Enter your password\n")
-while (x != "Qqwerty"):
-    print("Try again")
+i = 1
+while i < 6:
+  print(i)
+  i += 1
+#------------
+i = 0
+while i < 6:
+  i += 1
+  if i == 3:
+    continue
+  print(i)
 
-print("You are correct")
+# Note that number 3 is missing in the result
+
+#------------
+i = 1
+while i < 6:
+  print(i)
+  i += 1
+else:
+  print("i is no longer less than 6")
