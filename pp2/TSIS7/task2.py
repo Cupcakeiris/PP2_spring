@@ -18,7 +18,6 @@ songs = [path+r"\raining oranges.mp3",
          path+r"\stardust.mp3"
          ]
 i = random.randint(0, len(songs)-1)
-j = i # checks if future songs are not out of range
 pygame.mixer.music.load(songs[i])
 pygame.mixer.music.play()
 
@@ -44,22 +43,14 @@ while True:
             
             # previous
             if event.key == pygame.K_LEFT:
-                j -= 1
-                if j >= 0:
                     i -= 1
-                    pygame.mixer.music.load(songs[i])
+                    pygame.mixer.music.load(songs[i%len(songs)])
                     pygame.mixer.music.play()
-                else:
-                    pygame.mixer.music.rewind()
             # next
             if event.key == pygame.K_RIGHT:
-                j += 1
-                if j < len(songs):
                     i += 1
-                    pygame.mixer.music.load(songs[i])
+                    pygame.mixer.music.load(songs[i%len(songs)])
                     pygame.mixer.music.play()
-                else:
-                    pygame.mixer.music.rewind()
 
             
 
