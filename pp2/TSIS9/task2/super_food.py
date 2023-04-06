@@ -5,8 +5,8 @@ fancy_colors = [(255,192,203), (0,191,255), (95,158,160), (255,228,181), (220,20
 class SFood:
     block_size = None # default parameters
     color = fancy_colors[randint(0, len(fancy_colors)-1)]
-    x = 120
-    y = 120
+    x = 210
+    y = 100
     bounds = None
 
     def __init__(self, block_size, bounds):
@@ -15,6 +15,7 @@ class SFood:
 
     def draw(self, game, window):
         game.draw.rect(window, fancy_colors[randint(0, len(fancy_colors)-1)], (self.x, self.y, self.block_size, self.block_size))
+
 
     def respawn(self, snake_body): # draws square in random position
         blocks_in_x = (self.bounds[0])/self.block_size
@@ -32,3 +33,10 @@ class SFood:
             print("Food on body!")
 
         self.color = fancy_colors[randint(0, len(fancy_colors)-1)]
+    
+    def spawn_outside_borders(self):
+        self.x = self.bounds[0] + 10
+        self.y = self.bounds[1] + 10
+
+    
+    

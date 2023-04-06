@@ -22,6 +22,7 @@ LEVEL = 0
 font = pygame.font.Font(r'C:\KBTU\2nd semester\pp2\TSIS8\task2\assets\dogica.ttf',12)
 next_level = pygame.USEREVENT + 1
 sf_disappear = pygame.USEREVENT + 2
+sf_appear = pygame.USEREVENT + 3
 
 
 n = 11 # every 10th fruit level is increased
@@ -30,9 +31,9 @@ current_collected = 0
 
 timer = 3000
 pygame.time.set_timer(sf_disappear, timer)
+isDisappeared = False
 while True:
-
-    pygame.time.delay(antispeed)
+    pygame.time.delay(100)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
@@ -41,8 +42,14 @@ while True:
             LEVEL += 1
             print(True)
         if event.type == sf_disappear:
-            print('disappear!')
-            del sfood
+            if isDisappeared == False:
+                print('disappear!')
+                sfood.spawn_outside_borders()
+                isDisappeared = True
+            else:
+                print("appear!")
+                sfood.respawn(snake_body=Snake.body)
+                isDisappeared = False
 
         keys = pygame.key.get_pressed() # keyboard control
         if keys[pygame.K_LEFT]:
@@ -58,7 +65,7 @@ while True:
     window.fill((0,0,0))
     snake.draw(pygame, window)
     food.draw(pygame, window)
-    sfood.draw(pygame, window) # making them in group gives error
+    sfood.draw(pygame, window)  
     snake.check_for_food(food, 0) # 0 - small food
     snake.check_for_food(sfood, 1) # 1 - super food
 
@@ -82,7 +89,7 @@ while True:
     if isEvent: # so event wont run forever
         if COLLECTED  > current_collected:
             isEvent = False
-    print(COLLECTED , current_collected, isEvent)
+    # print(COLLECTED , current_collected, isEvent)
 
 
 
@@ -98,6 +105,7 @@ while True:
         n = 11
         LEVEL = 0
         antispeed = 100
+        COLLECTED = 0
 
     pygame.display.update()
     clock.tick(60)
